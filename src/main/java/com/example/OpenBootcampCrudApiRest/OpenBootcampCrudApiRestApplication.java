@@ -1,13 +1,23 @@
 package com.example.OpenBootcampCrudApiRest;
 
+import com.example.OpenBootcampCrudApiRest.Entity.LaptopEntity;
+import com.example.OpenBootcampCrudApiRest.Repository.LaptopRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
 public class OpenBootcampCrudApiRestApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OpenBootcampCrudApiRestApplication.class, args);
+
+		ApplicationContext context = SpringApplication.run(OpenBootcampCrudApiRestApplication.class, args);
+
+		LaptopEntity entity = new LaptopEntity("zx10", "01/07/1996", "Accer");
+		LaptopRepository repository = context.getBean(LaptopRepository.class);
+		repository.save(entity);
+
 	}
 
 }
