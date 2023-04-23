@@ -25,6 +25,6 @@ public class LaptopController {
     public ResponseEntity getAllUsers() {
         ResponseEntity response;
         List<LaptopEntity> laptops = repository.findAll();
-        return (laptops.size() == 0) ? new ResponseEntity<>(repository.findAll(), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return (laptops.size() != 0) ? new ResponseEntity<>(repository.findAll(), HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

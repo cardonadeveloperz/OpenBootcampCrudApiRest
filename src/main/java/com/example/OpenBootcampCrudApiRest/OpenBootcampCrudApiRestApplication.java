@@ -14,9 +14,9 @@ public class OpenBootcampCrudApiRestApplication {
 
 		ApplicationContext context = SpringApplication.run(OpenBootcampCrudApiRestApplication.class, args);
 
-		LaptopEntity entity = new LaptopEntity("zx10", "01/07/1996", "Accer");
 		LaptopRepository repository = context.getBean(LaptopRepository.class);
-		repository.save(entity);
+		repository.save(new LaptopEntity("zx10", "01/07/1996", "Accer"));
+		System.out.println("All entities --> "+repository.findAll().get(0));
 
 	}
 

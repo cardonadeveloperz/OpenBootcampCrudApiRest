@@ -37,7 +37,7 @@ public class SwaggerConfig {
                 "aqui se crea un CRUD laptos API REST",
                 "1.0",
                 "http://www.google.com",
-                new Contact("Julio Cardon","http://www.google.com","cardona.maturana@gmail.com"),
+                new Contact("Julio Cardona","http://www.google.com","cardona.maturana@gmail.com"),
                 "MIT",
                 "http://www.google.com",
                 Collections.EMPTY_LIST);
