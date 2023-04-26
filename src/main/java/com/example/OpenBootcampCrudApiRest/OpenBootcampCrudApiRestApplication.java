@@ -21,8 +21,6 @@ public class OpenBootcampCrudApiRestApplication {
 		repository.save(new LaptopEntity("TpLinkUB500", "07/05/2021", "Siragón"));
 
 
-
-
 	}
 
 }

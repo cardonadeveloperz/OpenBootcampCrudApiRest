@@ -12,10 +12,6 @@ import javax.persistence.Id;
 import java.security.PrivateKey;
 
 @Entity
-/*@Getter
-@Setter
-@ToString
-*/
 @Data
 public class LaptopEntity {
     @Id
@@ -29,7 +25,7 @@ public class LaptopEntity {
     public LaptopEntity(){
 
     }
-    public LaptopEntity(String model, String date, String brand){
+   public LaptopEntity(String model, String date, String brand){
         this.model = model;
         this.date = date;
         this.brand = brand;
