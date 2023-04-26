@@ -40,7 +40,7 @@ public class LaptopController {
                     "ingresado"),
             @ApiResponse(code = 404, message = "NOT_FOUND si no hay coincidencias de Laptop con el ID ingresado")})
     @GetMapping("/laptop/{id}")
-    public ResponseEntity<LaptopEntity> findByID(@PathVariable long id) {
+    public ResponseEntity<LaptopEntity> findById(@PathVariable long id) {
         Optional<LaptopEntity> optional = repository.findById(id);
         return (optional.isPresent()) ? new ResponseEntity<>(optional.get(), HttpStatus.OK) :
                 new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -52,9 +52,30 @@ public class LaptopController {
             @ApiResponse(code = 400, message = "Bad request, Objeto NULL")})
     @PostMapping("laptop")
     public ResponseEntity create(@RequestBody LaptopEntity laptop) {
-        if (laptop.getBrand() == null && laptop.getDate() == null && laptop.getModel() == null) {
+        if (isNull(laptop) || repository.existsById(laptop.getId())) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return (new ResponseEntity<LaptopEntity>(repository.save(laptop), HttpStatus.OK));
+    }
+
+    @ApiOperation(value = "Actualiza una Laptop existente, Verifica que la laptop ingresada no sea NULL y que exista")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Devuelve el objeto laptop modificado."),
+            @ApiResponse(code = 400, message = "Laptop no existe"),
+            @ApiResponse(code = 400, message = "Bad request, Objeto NULL")})
+    @PutMapping("laptop")
+    public ResponseEntity update(@RequestBody LaptopEntity laptop) {
+        if (isNull(laptop) || (!repository.existsById(laptop.getId()))) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return (new ResponseEntity<LaptopEntity>(repository.save(laptop), HttpStatus.OK));
+    }
+
+    public boolean isNull(LaptopEntity laptop) {
+        if (laptop.getBrand() == null && laptop.getDate() == null && laptop.getModel() == null) {
+            return true;
+        }else{
+            return false;
+        }
     }
 }
