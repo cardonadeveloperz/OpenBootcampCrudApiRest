@@ -61,14 +61,35 @@ public class LaptopController {
     @ApiOperation(value = "Actualiza una Laptop existente, Verifica que la laptop ingresada no sea NULL y que exista")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Devuelve el objeto laptop modificado."),
-            @ApiResponse(code = 400, message = "Laptop no existe"),
-            @ApiResponse(code = 400, message = "Bad request, Objeto NULL")})
+            @ApiResponse(code = 400, message = "Laptop NULL o no existe")})
     @PutMapping("laptop")
     public ResponseEntity update(@RequestBody LaptopEntity laptop) {
         if (isNull(laptop) || (!repository.existsById(laptop.getId()))) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return (new ResponseEntity<LaptopEntity>(repository.save(laptop), HttpStatus.OK));
+    }
+
+    @ApiOperation(value = "Elimina todas las laptops en la BD")
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "Elimina todas las laptop")})
+    @DeleteMapping("laptop")
+    public ResponseEntity delete() {
+        repository.deleteAll();
+        return (new ResponseEntity<LaptopEntity>(HttpStatus.NO_CONTENT));
+    }
+
+    @ApiOperation(value = "Elimina una Laptop existente por ID")
+    @ApiResponses(value = {
+            @ApiResponse(code = 204, message = "Elimina la laptop con el id ingresado"),
+            @ApiResponse(code = 400, message = "Laptop no existe o laptop es NULL")})
+    @DeleteMapping("laptop/{id}")
+    public ResponseEntity delete(@PathVariable long id) {
+        if (!repository.existsById(id)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        repository.deleteById(id);
+        return (new ResponseEntity<LaptopEntity>(HttpStatus.NO_CONTENT));
     }
 
     public boolean isNull(LaptopEntity laptop) {
