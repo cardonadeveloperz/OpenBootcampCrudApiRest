@@ -14,11 +14,11 @@ public class OpenBootcampCrudApiRestApplication {
 
 		ApplicationContext context = SpringApplication.run(OpenBootcampCrudApiRestApplication.class, args);
 
-		LaptopRepository repository = context.getBean(LaptopRepository.class);
+	/*	LaptopRepository repository = context.getBean(LaptopRepository.class);
 		//Linea para insertar una laptor de manera anonima.
 		repository.save(new LaptopEntity("zx10", "01/07/1996", "Accer"));
 		repository.save(new LaptopEntity("Resd58", "25/10/1995", "Hp"));
-		repository.save(new LaptopEntity("TpLinkUB500", "07/05/2021", "Siragón"));
+		repository.save(new LaptopEntity("TpLinkUB500", "07/05/2021", "Siragón"));*/
 
 
 	}

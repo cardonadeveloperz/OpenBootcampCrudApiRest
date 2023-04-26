@@ -27,10 +27,17 @@ public class LaptopController {
             @ApiResponse(code = 200, message = "Devuelve una lista con todas las laptops registradas en BD"),
             @ApiResponse(code = 204, message = "NOT_CONTECT si no hay Laptop registradas en BD")})
     @GetMapping("/laptops")
-    public ResponseEntity findAll() {
+    public ResponseEntity<LaptopEntity> findAll() {
         ResponseEntity response;
         List<LaptopEntity> laptops = repository.findAll();
-        return (laptops.size() != 0) ? new ResponseEntity<>(laptops, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        if (laptops.size() == 0) {
+            response = new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        else {
+            response = new ResponseEntity<>(laptops, HttpStatus.OK);
+        }
+
+        return response;
 
     }
 
