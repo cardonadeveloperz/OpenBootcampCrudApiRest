@@ -46,6 +46,7 @@ public class LaptopController {
             @ApiResponse(code = 200, message = "Devuelve JSON con la informacion de la laptop encontrad con el ID " +
                     "ingresado"),
             @ApiResponse(code = 404, message = "NOT_FOUND si no hay coincidencias de Laptop con el ID ingresado")})
+
     @GetMapping("/laptop/{id}")
     public ResponseEntity<LaptopEntity> findById(@PathVariable long id) {
         Optional<LaptopEntity> optional = repository.findById(id);
@@ -57,9 +58,12 @@ public class LaptopController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Devuelve el objeto laptop creado."),
             @ApiResponse(code = 400, message = "Bad request, Objeto NULL")})
+
     @PostMapping("laptop")
-    public ResponseEntity create(@RequestBody LaptopEntity laptop) {
+    public ResponseEntity<LaptopEntity> create(@RequestBody LaptopEntity laptop) {
+        System.out.println("Mostrando laptop --> " + laptop);
         if (isNull(laptop) || repository.existsById(laptop.getId())) {
+
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return (new ResponseEntity<LaptopEntity>(repository.save(laptop), HttpStatus.OK));
@@ -69,8 +73,10 @@ public class LaptopController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Devuelve el objeto laptop modificado."),
             @ApiResponse(code = 400, message = "Laptop NULL o no existe")})
+
     @PutMapping("laptop")
     public ResponseEntity update(@RequestBody LaptopEntity laptop) {
+
         if (isNull(laptop) || (!repository.existsById(laptop.getId()))) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
