@@ -25,11 +25,14 @@ public class LaptopController {
     @ApiOperation(value = "Se realiza una consulta que retorna todos los objetos Laptop registrados en la BD")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Devuelve una lista con todas las laptops registradas en BD"),
-            @ApiResponse(code = 204, message = "NOT_CONTECT si no hay Laptop registradas en BD")})
+            @ApiResponse(code = 204, message = "No hay Laptop registradas en BD")})
 
 
 
-
+/*
+    TODO: Pendiente para comentar con wagger
+*
+**/
 
 
 
