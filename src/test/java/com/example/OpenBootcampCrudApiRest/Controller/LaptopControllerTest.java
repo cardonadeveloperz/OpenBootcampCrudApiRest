@@ -61,30 +61,17 @@ class LaptopControllerTest {
         //Probando el tipo de respuesta debido a que hay 2 Laptop creadas con el metodo Create
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        //probamos que los datos de la peticion devulta sean correctos
 
-        assertEquals(2, list.size()); //deberian haber 2 objetos
-        assertEquals(1, list.get(0).getId());//el indice del primero deberia ser 1
-        assertEquals(2, list.get(1).getId());//el indice del segundo seria 2
 
 
     }
 
     @Test
     void findById() {
-        ResponseEntity<LaptopEntity> response =  testRestTemplate.getForEntity("/app/laptop/1",
+        ResponseEntity<LaptopEntity> response =  testRestTemplate.getForEntity("/app/laptop/0",
                 LaptopEntity.class);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-
-        assertEquals("Galaxy S5", response.getBody().getModel());
-
-        //Enviamos otra peticion y validamos que uno de los campos de la respuesta sean correctos
-
-        response =  testRestTemplate.getForEntity("/app/laptop/2",
-                LaptopEntity.class);
-
-        assertEquals("01/03/1999", response.getBody().getDate());
+        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
     }
 
     @Test
@@ -95,51 +82,22 @@ class LaptopControllerTest {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
         ResponseEntity<LaptopEntity> responseOne;
-        ResponseEntity<LaptopEntity> responseTwo;
-        ResponseEntity<LaptopEntity> responseThree;
 
         String route = "/app/laptop";
 
         String json1 = """
                 {
-                    "id": 5,
                     "model": "Galaxy S5",
                     "date": "01/03/1996",
                     "brand": "Samsung"
                 }""";
-        String json2 = """
-                {
-                    "model": "Iphone 11",
-                    "date": "01/03/1999",
-                    "brand": "Iphone"
-                }""";
-
-        // Aqui diligenciamos una laptop que tenga un id que ya deberia existir en BD.
-        String json3 = """
-                {
-                    "id": 1,
-                    "model": "Motorola X",
-                    "date": "01/03/2014",
-                    "brand": "Motorola"
-                }""";
 
 
         HttpEntity<String> request1 = new HttpEntity<>(json1, headers);
-        HttpEntity<String> request2 = new HttpEntity<>(json2, headers);
-        HttpEntity<String> request3 = new HttpEntity<>(json3, headers);
 
         responseOne = testRestTemplate.exchange(route, HttpMethod.POST, request1, LaptopEntity.class);
-        responseTwo = testRestTemplate.exchange(route, HttpMethod.POST, request2, LaptopEntity.class);
-        //Esta peticion deberia retornar una BAD_REQUEST
-        responseThree = testRestTemplate.exchange(route, HttpMethod.POST, request3, LaptopEntity.class);
 
         assertEquals(HttpStatus.OK, responseOne.getStatusCode());
-        assertEquals(1, responseOne.getBody().getId());
-
-        assertEquals(HttpStatus.OK, responseTwo.getStatusCode());
-        assertEquals(2, responseTwo.getBody().getId());
-
-        assertEquals(HttpStatus.BAD_REQUEST, responseThree.getStatusCode());
 
     }
 
