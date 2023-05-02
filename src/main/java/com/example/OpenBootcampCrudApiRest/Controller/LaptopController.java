@@ -26,6 +26,28 @@ public class LaptopController {
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Devuelve una lista con todas las laptops registradas en BD"),
             @ApiResponse(code = 204, message = "NOT_CONTECT si no hay Laptop registradas en BD")})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     @GetMapping("/laptops")
     public ResponseEntity<LaptopEntity> findAll() {
         ResponseEntity response;
